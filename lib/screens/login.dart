@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_x_todo/screens/sign_up.dart';
 
-class LoginPage extends StatelessWidget {
+import '../controllers/auth_controller.dart';
+import 'sign_up.dart';
+
+class LoginPage extends GetWidget<AuthController> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -13,12 +18,14 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                controller: emailController,
                 decoration: InputDecoration(
                   hintText: "Email",
                   prefixIcon: Icon(Icons.email),
                 ),
               ),
               TextFormField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -27,12 +34,15 @@ class LoginPage extends StatelessWidget {
               ),
               RaisedButton(
                 child: Text("Login"),
-                onPressed: () {},
+                onPressed: () {
+                  controller.login(
+                      emailController.text, passwordController.text);
+                },
               ),
               FlatButton(
                 child: Text("Sign up"),
                 onPressed: () {
-                  Get.to(SingUp()); 
+                  Get.to(SingUp());
                 },
               )
             ],

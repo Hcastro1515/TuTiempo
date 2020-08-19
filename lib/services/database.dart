@@ -16,4 +16,16 @@ class Database {
       return false;
     }
   }
+
+  Future<UserModel> getUser(String uid) async {
+    try {
+      DocumentSnapshot _document =
+          await _fireStore.collection("users").document(uid).get();
+
+      return UserModel.fromDocumentSnapshot(documentSnapshot: _document);
+    } catch (e) {
+      print(e);
+      rethrow; 
+    }
+  }
 }

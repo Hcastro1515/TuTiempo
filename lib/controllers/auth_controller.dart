@@ -4,6 +4,9 @@ import 'package:get_x_todo/controllers/user_controller.dart';
 import 'package:get_x_todo/models/user_model.dart';
 import 'package:get_x_todo/services/database.dart';
 
+import '../services/database.dart';
+import 'user_controller.dart';
+
 class AuthController extends GetxController {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Rx<FirebaseUser> _firebaseUser = Rx<FirebaseUser>();
@@ -38,6 +41,29 @@ class AuthController extends GetxController {
         e.message,
         snackPosition: SnackPosition.BOTTOM,
       );
+    }
+  }
+
+  void login(String email, String password) async {
+    try {
+      AuthResult _authresult = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: email);
+
+      Get.find<UserController>().user =
+          await Database().getUser(_authresult.user.uid);
+    } catch (e) {
+      Get.snackbar("Error logging in", e.message,
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  void signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+      Get.find<UserController>().clear();
+    } catch (e) {
+      Get.snackbar("Error signing out", e.message,
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 }
