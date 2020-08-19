@@ -22,7 +22,7 @@ class AuthController extends GetxController {
     try {
       UserCredential _authResult =
           await _firebaseAuth.createUserWithEmailAndPassword(
-              email: email.trim(), password: password);
+              email: email, password: password);
       //create user in database.dart
       UserModel _user = UserModel(
         id: _authResult.user.uid,
@@ -46,7 +46,7 @@ class AuthController extends GetxController {
   void login(String email, String password) async {
     try {
       UserCredential _authresult = await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: email);
+          email: email.trim().toLowerCase(), password: password);
 
       Get.find<UserController>().user =
           await Database().getUser(_authresult.user.uid);
