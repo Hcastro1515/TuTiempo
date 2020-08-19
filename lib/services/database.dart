@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_x_todo/models/user_model.dart';
 
 class Database {
-  final Firestore _fireStore = Firestore.instance;
+  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
   Future<bool> createNewUser(UserModel user) async {
     try {
-      await _fireStore.collection("users").document(user.id).setData({
+      await _fireStore.collection("users").doc(user.id).set({
         "name": user.name,
         "email": user.email,
       });
@@ -19,13 +19,13 @@ class Database {
 
   Future<UserModel> getUser(String uid) async {
     try {
-      DocumentSnapshot _document =
-          await _fireStore.collection("users").document(uid).get();
+      DocumentSnapshot _doc =
+          await _fireStore.collection("users").doc(uid).get();
 
-      return UserModel.fromDocumentSnapshot(documentSnapshot: _document);
+      return UserModel.fromDocumentSnapshot(documentSnapshot: _doc);
     } catch (e) {
       print(e);
-      rethrow; 
+      rethrow;
     }
   }
 }

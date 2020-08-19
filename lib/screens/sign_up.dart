@@ -11,6 +11,9 @@ class SingUp extends GetWidget<AuthController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text("Sign in"),
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(

@@ -9,32 +9,31 @@ import 'user_controller.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  Rx<FirebaseUser> _firebaseUser = Rx<FirebaseUser>();
+  Rx<User> _firebaseUser = Rx<User>();
 
-  FirebaseUser get user => _firebaseUser.value;
+  User get user => _firebaseUser.value;
 
   @override
   onInit() {
-    _firebaseUser.bindStream(_firebaseAuth.onAuthStateChanged);
+    _firebaseUser.bindStream(_firebaseAuth.authStateChanges());
   }
 
   void createUser(String name, String email, String password) async {
     try {
-      AuthResult _authresult =
+      UserCredential _authResult =
           await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email.trim(),
-        password: password,
-      );
+              email: email.trim(), password: password);
+      //create user in database.dart
       UserModel _user = UserModel(
-        email: _authresult.user.email,
+        id: _authResult.user.uid,
         name: name,
-        id: _authresult.user.uid,
+        email: _authResult.user.email,
       );
-
       if (await Database().createNewUser(_user)) {
         Get.find<UserController>().user = _user;
         Get.back();
       }
+
     } catch (e) {
       Get.snackbar(
         "Error creating Account",
@@ -46,7 +45,7 @@ class AuthController extends GetxController {
 
   void login(String email, String password) async {
     try {
-      AuthResult _authresult = await _firebaseAuth.signInWithEmailAndPassword(
+      UserCredential _authresult = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: email);
 
       Get.find<UserController>().user =

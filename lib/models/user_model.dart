@@ -6,8 +6,8 @@ class UserModel {
   UserModel({this.id, this.email, this.name});
 
   UserModel.fromDocumentSnapshot({DocumentSnapshot documentSnapshot}) {
-    id = documentSnapshot.documentID;
-    name = documentSnapshot["name"];
-    email = documentSnapshot["email"];
+    id = documentSnapshot.id;
+    name = documentSnapshot.get("name");
+    email = documentSnapshot.get("email");
   }
 }
