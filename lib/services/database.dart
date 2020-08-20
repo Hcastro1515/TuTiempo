@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_x_todo/models/task_model.dart';
 import 'package:get_x_todo/models/user_model.dart';
 
 class Database {
@@ -21,11 +22,40 @@ class Database {
     try {
       DocumentSnapshot _doc =
           await _fireStore.collection("users").doc(uid).get();
-
       return UserModel.fromDocumentSnapshot(documentSnapshot: _doc);
     } catch (e) {
       print(e);
       rethrow;
     }
+  }
+
+  Future<void> addTask(String title, String time, String uid) async {
+    try {
+      await _fireStore.collection("users").doc(uid).collection("tasks").add({
+        'datecreated': Timestamp.now(),
+        'title': title,
+        'time': time,
+        'done': false,
+      });
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Stream<List<Task>> taskStream(String uid) {
+    return _fireStore
+        .collection('users')
+        .doc(uid)
+        .collection("tasks")
+        .orderBy("dateCreated", descending: true)
+        .snapshots()
+        .map((QuerySnapshot query) {
+      List<Task> tasks = List();
+      query.docs.forEach((element) {
+        tasks.add(Task.fromDocumentSnapshot(element));
+      });
+      return tasks;
+    });
   }
 }
