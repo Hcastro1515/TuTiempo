@@ -6,11 +6,11 @@ class Task {
   Timestamp dateCreated;
   Task({this.title, this.time});
 
-  Task.fromDocumentSnapshot(QueryDocumentSnapshot queryDocumentSnapshot) {
-    id = queryDocumentSnapshot.id;
-    title = queryDocumentSnapshot.get("title");
-    time = queryDocumentSnapshot.get("time");
-    dateCreated = queryDocumentSnapshot.get("dateCreated");
-    done = queryDocumentSnapshot.get("done");
+  Task.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+    id = documentSnapshot.id;
+    title = documentSnapshot.get("title");
+    time = documentSnapshot.get("time");
+    dateCreated = documentSnapshot.get("dateCreated");
+    done = documentSnapshot.get("done");
   }
 }

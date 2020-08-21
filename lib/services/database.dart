@@ -43,19 +43,21 @@ class Database {
     }
   }
 
+  
   Stream<List<Task>> taskStream(String uid) {
     return _fireStore
         .collection('users')
         .doc(uid)
         .collection("tasks")
-        .orderBy("dateCreated", descending: true)
+        .orderBy("dateCreated")
         .snapshots()
         .map((QuerySnapshot query) {
-      List<Task> tasks = List();
+      List<Task> tasksValues = List();
       query.docs.forEach((element) {
-        tasks.add(Task.fromDocumentSnapshot(element));
+        print(element); 
+        tasksValues.add(Task.fromDocumentSnapshot(element));
       });
-      return tasks;
+      return tasksValues;
     });
   }
 }
