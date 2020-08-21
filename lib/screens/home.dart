@@ -5,7 +5,6 @@ import '../controllers/auth_controller.dart';
 import '../controllers/task_controller.dart';
 import '../services/database.dart';
 
-
 class HomePage extends GetWidget<AuthController> {
   final TextEditingController taskController = TextEditingController();
 
@@ -84,9 +83,9 @@ class HomePage extends GetWidget<AuthController> {
                   ],
                 ),
               ),
-              GetX<TaskController>(
-                init: Get.put<TaskController>(TaskController()),
-                builder: (TaskController tcontroller) {
+              GetX<TaskModelController>(
+                init: Get.put<TaskModelController>(TaskModelController()),
+                builder: (TaskModelController tcontroller) {
                   if (tcontroller != null && tcontroller.tasks != null) {
                     return Expanded(
                       child: ListView.builder(
@@ -97,7 +96,7 @@ class HomePage extends GetWidget<AuthController> {
                       ),
                     );
                   } else {
-                    return Center(child: Text("Loading..."));
+                    return CircularProgressIndicator();
                   }
                 },
               ),

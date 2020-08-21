@@ -43,21 +43,39 @@ class Database {
     }
   }
 
-  
-  Stream<List<Task>> taskStream(String uid) {
-    return _fireStore
-        .collection('users')
-        .doc(uid)
-        .collection("tasks")
-        .orderBy("dateCreated")
-        .snapshots()
-        .map((QuerySnapshot query) {
-      List<Task> tasksValues = List();
-      query.docs.forEach((element) {
-        print(element); 
-        tasksValues.add(Task.fromDocumentSnapshot(element));
+  Stream<List<TaskModel>> taskStream(String uid) {
+    try {
+      Stream<QuerySnapshot> data = _fireStore
+          .collection('users')
+          .doc(uid)
+          .collection("tasks")
+          .orderBy("dateCreated")
+          .snapshots();
+      return data.map((QuerySnapshot query) {
+        List<TaskModel> tasksValues = List();
+        query.docs.forEach((element) {
+          print("Data $element");
+          tasksValues.add(TaskModel.fromDocumentSnapshot(element));
+        });
+        return tasksValues;
       });
-      return tasksValues;
-    });
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<void> updateTodo(bool newValue, String uid, String todoId) async {
+    try {
+      _fireStore
+          .collection("users")
+          .doc(uid)
+          .collection("tasks")
+          .doc(todoId)
+          .update({"done": newValue});
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 }

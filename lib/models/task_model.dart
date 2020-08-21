@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Task {
+class TaskModel {
   String id, title, time;
   bool done;
   Timestamp dateCreated;
-  Task({this.title, this.time});
+  TaskModel({this.title, this.time});
 
-  Task.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
+  TaskModel.fromDocumentSnapshot(DocumentSnapshot documentSnapshot) {
     id = documentSnapshot.id;
     title = documentSnapshot.get("title");
     time = documentSnapshot.get("time");

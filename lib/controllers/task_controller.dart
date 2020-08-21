@@ -3,14 +3,15 @@ import 'package:get_x_todo/controllers/auth_controller.dart';
 import 'package:get_x_todo/models/task_model.dart';
 import 'package:get_x_todo/services/database.dart';
 
-class TaskController extends GetxController {
-  Rx<List<Task>> _tasksList = Rx<List<Task>>();
+class TaskModelController extends GetxController {
+  Rx<List<TaskModel>> _taskModelsList = Rx<List<TaskModel>>();
 
-  List<Task> get tasks => _tasksList.value;
+  List<TaskModel> get tasks => _taskModelsList.value;
 
   @override
   void onInit() {
     String uid = Get.find<AuthController>().user.uid;
-    _tasksList.bindStream(Database().taskStream(uid));
+    _taskModelsList
+          .bindStream(Database().taskStream(uid));
   }
 }
