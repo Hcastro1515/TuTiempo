@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_x_todo/widgets/task_card.dart';
 
 import '../controllers/auth_controller.dart';
 import '../controllers/task_controller.dart';
@@ -14,6 +15,7 @@ class HomePage extends GetWidget<AuthController> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("TuTiempo"),
+          backgroundColor: Color(0xff272A27),
           actions: [
             GestureDetector(
               onTap: () => controller.signOut(),
@@ -91,7 +93,10 @@ class HomePage extends GetWidget<AuthController> {
                       child: ListView.builder(
                         itemCount: tcontroller.tasks.length,
                         itemBuilder: (_, index) {
-                          return Text(tcontroller.tasks[index].time);
+                          return TaskCard(
+                            task: tcontroller.tasks[index],
+                            uid: controller.user.uid,
+                          );
                         },
                       ),
                     );

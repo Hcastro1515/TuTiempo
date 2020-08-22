@@ -8,8 +8,8 @@ class Database {
   Future<bool> createNewUser(UserModel user) async {
     try {
       await _fireStore.collection("users").doc(user.id).set({
-        "name": user.name,
-        "email": user.email,
+        "name": user.name.trim(),
+        "email": user.email.trim(),
       });
       return true;
     } catch (e) {
@@ -45,16 +45,15 @@ class Database {
 
   Stream<List<TaskModel>> taskStream(String uid) {
     try {
-      Stream<QuerySnapshot> data = _fireStore
+      return _fireStore
           .collection('users')
           .doc(uid)
           .collection("tasks")
-          .orderBy("dateCreated")
-          .snapshots();
-      return data.map((QuerySnapshot query) {
+          .orderBy("datecreated")
+          .snapshots()
+          .map((QuerySnapshot query) {
         List<TaskModel> tasksValues = List();
         query.docs.forEach((element) {
-          print("Data $element");
           tasksValues.add(TaskModel.fromDocumentSnapshot(element));
         });
         return tasksValues;
@@ -73,6 +72,21 @@ class Database {
           .collection("tasks")
           .doc(todoId)
           .update({"done": newValue});
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<void> deleteTask(String uid, String taskId) {
+    try {
+      _fireStore
+          .collection("users")
+          .doc(uid)
+          .collection("tasks")
+          .doc(taskId)
+          .delete()
+          .then((value) => print("Task deleted"));
     } catch (e) {
       print(e);
       rethrow;
