@@ -8,7 +8,8 @@ import '../services/database.dart';
 
 class HomePage extends GetWidget<AuthController> {
   final TextEditingController taskController = TextEditingController();
-
+  String time;
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,10 +53,7 @@ class HomePage extends GetWidget<AuthController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "You have 8 tasks today",
-                          style: TextStyle(fontSize: 16),
-                        ),
+                        Text("You have 8 today"),
                         FlatButton(
                           onPressed: () {},
                           child: Text(
@@ -73,6 +71,14 @@ class HomePage extends GetWidget<AuthController> {
                   children: [
                     Expanded(
                       child: TextField(
+                        onSubmitted: (value) => {
+                          if (taskController.text != "")
+                            {
+                              Database().addTask(taskController.text, time,
+                                  controller.user.uid),
+                              taskController.clear()
+                            }
+                        },
                         controller: taskController,
                         decoration:
                             InputDecoration(hintText: "Nombre de cliente"),
@@ -80,7 +86,11 @@ class HomePage extends GetWidget<AuthController> {
                     ),
                     IconButton(
                       icon: Icon(Icons.timer),
-                      onPressed: () {},
+                      onPressed: () async {
+                        TimeOfDay picked = await showTimePicker(
+                            context: context, initialTime: TimeOfDay.now());
+                        time = picked.format(context).toString();
+                      },
                     )
                   ],
                 ),
@@ -113,49 +123,11 @@ class HomePage extends GetWidget<AuthController> {
           onPressed: () {
             if (taskController.text != "") {
               Database()
-                  .addTask(taskController.text, "10:30pm", controller.user.uid);
+                  .addTask(taskController.text, time, controller.user.uid);
               taskController.clear();
             }
           },
         ),
-      ),
-    );
-  }
-
-  Container buildCustomAppBar() {
-    return Container(
-      height: Get.height / 12,
-      color: Color(0xff272A27),
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 15,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("TuTiempo",
-              style: TextStyle(
-                fontSize: 24,
-                color: Color(0xffF2F2F2),
-              )),
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () => controller.signOut(),
-                child: Icon(
-                  Icons.exit_to_app,
-                  color: Color(0xffF2F2F2),
-                ),
-              ),
-              SizedBox(width: 10),
-              Icon(
-                Icons.wb_sunny,
-                color: Color(0xffF2F2F2),
-              ),
-            ],
-          )
-        ],
       ),
     );
   }
