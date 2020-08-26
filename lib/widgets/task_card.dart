@@ -17,7 +17,7 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: Get.height / 10,
+      height: Get.height / 9.5,
       width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5), color: Color(0xff272A27)),
@@ -49,7 +49,7 @@ class TaskCard extends StatelessWidget {
                     ),
                   ],
                 )
-              ],
+              ], 
             ),
           ],
         ),
