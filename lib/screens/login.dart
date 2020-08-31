@@ -45,6 +45,8 @@ class LoginPage extends GetWidget<AuthController> {
                     height: 20,
                   ),
                   TextFormField(
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.emailAddress,
                     controller: emailController,
                     decoration: InputDecoration(
                       fillColor: Colors.purple,
@@ -57,6 +59,8 @@ class LoginPage extends GetWidget<AuthController> {
                     ),
                   ),
                   TextFormField(
+                    textInputAction: TextInputAction.go,
+                    keyboardType: TextInputType.visiblePassword,
                     controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(

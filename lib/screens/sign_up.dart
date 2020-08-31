@@ -50,6 +50,8 @@ class SingUp extends GetWidget<AuthController> {
                     child: Column(
                       children: [
                         TextFormField(
+                          keyboardType: TextInputType.name,
+                          textInputAction: TextInputAction.next,
                           controller: userName,
                           decoration: InputDecoration(
                             hintText: "Name",
@@ -61,6 +63,8 @@ class SingUp extends GetWidget<AuthController> {
                           height: 10,
                         ),
                         TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
                           controller: emailController,
                           decoration: InputDecoration(
                             hintText: "Email",
@@ -72,6 +76,7 @@ class SingUp extends GetWidget<AuthController> {
                           height: 10,
                         ),
                         TextFormField(
+                          textInputAction: TextInputAction.done,
                           controller: passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
