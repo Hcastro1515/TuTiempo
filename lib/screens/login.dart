@@ -41,48 +41,59 @@ class LoginPage extends GetWidget<AuthController> {
                     height: 300,
                     child: SvgPicture.asset(logInImage),
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      fillColor: Colors.purple,
-                      errorStyle: TextStyle(color: Colors.red),
-                      hintText: "Email",
-                      prefixIcon: Icon(
-                        Icons.email,
-                        color: Color(0xff2AA1F6),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(3),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 10,
+                              color: Colors.grey,
+                              offset: Offset(0, 3))
+                        ]),
+                    width: double.infinity,
+                    padding: EdgeInsets.only(
+                        top: 20, bottom: 20, left: 20, right: 20),
+                    margin: EdgeInsets.only(bottom: 20, top: 20),
+                    child: Column(children: [
+                      TextFormField(
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.emailAddress,
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          fillColor: Colors.purple,
+                          errorStyle: TextStyle(color: Colors.red),
+                          hintText: "Email",
+                          prefixIcon: Icon(
+                            Icons.email,
+                            color: Color(0xff2AA1F6),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  TextFormField(
-                    textInputAction: TextInputAction.go,
-                    keyboardType: TextInputType.visiblePassword,
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "Password",
-                      prefixIcon: Icon(
-                        Icons.lock,
-                        color: Color(0xff2AA1F6),
+                      TextFormField(
+                        textInputAction: TextInputAction.go,
+                        keyboardType: TextInputType.visiblePassword,
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Color(0xff2AA1F6),
+                          ),
+                          errorStyle: TextStyle(color: Colors.red),
+                        ),
                       ),
-                      errorStyle: TextStyle(color: Colors.red),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text("Forgot Password?"),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("Forgot Password?"),
+                        ],
+                      ),
+                    ]),
                   ),
                   RaisedButton(
                     elevation: 0,
