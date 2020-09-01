@@ -121,7 +121,7 @@ class LoginPage extends GetWidget<AuthController> {
                       ),
                     ),
                     onPressed: () {
-                      Get.to(SingUp());
+                      Get.to(SingUp(), transition: Transition.rightToLeftWithFade);
                     },
                   )
                 ],
