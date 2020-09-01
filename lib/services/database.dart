@@ -92,4 +92,21 @@ class Database {
       rethrow;
     }
   }
+
+  Future<void> clearTasks(String uid, String taskId) {
+    try {
+      _fireStore
+          .collection("users")
+          .doc(uid)
+          .collection("tasks")
+          .get()
+          .then((snapshot) => {
+                for (DocumentSnapshot documentSnapshot in snapshot.docs)
+                  {documentSnapshot.reference.delete()}
+              });
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
 }

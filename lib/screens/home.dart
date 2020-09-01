@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_x_todo/models/task_model.dart';
 import 'package:get_x_todo/widgets/task_card.dart';
 
 import '../controllers/auth_controller.dart';
@@ -8,8 +9,9 @@ import '../services/database.dart';
 
 class HomePage extends GetWidget<AuthController> {
   final TextEditingController taskController = TextEditingController();
+  TaskModel task = TaskModel(); 
   String time;
-  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -54,8 +56,11 @@ class HomePage extends GetWidget<AuthController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("You have 8 today"),
-                        FlatButton(
-                          onPressed: () {},
+                        RaisedButton(
+                          elevation: 0,
+                          onPressed: () {
+                            Database().clearTasks(controller.user.uid, task.taskId); 
+                          },
                           child: Text(
                             "clear".toUpperCase(),
                             style: TextStyle(color: Colors.red),
@@ -111,7 +116,7 @@ class HomePage extends GetWidget<AuthController> {
                       ),
                     );
                   } else {
-                    return CircularProgressIndicator();
+                    return Center(child: CircularProgressIndicator());
                   }
                 },
               ),

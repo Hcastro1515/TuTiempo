@@ -25,5 +25,10 @@ final themeData = ThemeData(
       fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
+    subtitle1: GoogleFonts.poppins(
+      color: Colors.grey, 
+      fontSize: 20, 
+      fontWeight: FontWeight.bold
+    ),
   ),
 );

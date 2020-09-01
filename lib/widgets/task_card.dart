@@ -17,7 +17,7 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
-      height: Get.height / 9.5,
+      height: Get.height / 9,
       width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5), color: Color(0xff272A27)),
@@ -27,7 +27,7 @@ class TaskCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(task.time, style: Theme.of(context).textTheme.headline1),
+            Text(task.time, style: Theme.of(context).textTheme.subtitle1),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
