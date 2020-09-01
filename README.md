@@ -6,7 +6,7 @@ TuTiempo es una aplicacion hecha para barberos y salones para que puedan guardar
 
 # Things to do this week
 
-## Tuesday: Form validation
+### Tuesday: Form validation
 
 - [ ] create helper folder
 - [ ] develope a validator helper class
@@ -15,7 +15,7 @@ TuTiempo es una aplicacion hecha para barberos y salones para que puedan guardar
 - [ ] manage form validation on submit, thist should be done either on createUserMethod, or logging in method
 - [ ] Fix, TextFormFields: KeyboardInputActions
 
-## Thursday: Animations
+### Thursday: Animations
 
 - [ ] Learn about flutter animation
 - [ ] Decide on a tool to animate or do it natively
