@@ -10,6 +10,7 @@ import "../config.dart";
 class LoginPage extends GetWidget<AuthController> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,45 +56,61 @@ class LoginPage extends GetWidget<AuthController> {
                     padding: EdgeInsets.only(
                         top: 20, bottom: 20, left: 20, right: 20),
                     margin: EdgeInsets.only(bottom: 20, top: 20),
-                    child: Column(children: [
-                      TextFormField(
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.purple,
-                          errorStyle: TextStyle(color: Colors.red),
-                          hintText: "Email",
-                          prefixIcon: Icon(
-                            Icons.email,
-                            color: Color(0xff2AA1F6),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(children: [
+                        TextFormField(
+                          validator: (value) {
+                            if (value.isEmpty)
+                              return "Please enter a valid email";
+                            else
+                              return null;
+                          },
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            fillColor: Colors.purple,
+                            errorStyle: TextStyle(color: Colors.red),
+                            hintText: "Email",
+                            prefixIcon: Icon(
+                              Icons.email,
+                              color: Color(0xff2AA1F6),
+                            ),
                           ),
                         ),
-                      ),
-                      TextFormField(
-                        textInputAction: TextInputAction.go,
-                        keyboardType: TextInputType.visiblePassword,
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            color: Color(0xff2AA1F6),
+                        TextFormField(
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Password must be 8 characters";
+                            } else {
+                              return null;
+                            }
+                          },
+                          textInputAction: TextInputAction.go,
+                          keyboardType: TextInputType.visiblePassword,
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            prefixIcon: Icon(
+                              Icons.lock,
+                              color: Color(0xff2AA1F6),
+                            ),
+                            errorStyle: TextStyle(color: Colors.red),
                           ),
-                          errorStyle: TextStyle(color: Colors.red),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text("Forgot Password?"),
-                        ],
-                      ),
-                    ]),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text("Forgot Password?"),
+                          ],
+                        ),
+                      ]),
+                    ),
                   ),
                   RaisedButton(
                     elevation: 0,
@@ -106,8 +123,10 @@ class LoginPage extends GetWidget<AuthController> {
                       ),
                     ),
                     onPressed: () {
-                      controller.login(
-                          emailController.text, passwordController.text);
+                      if (_formKey.currentState.validate()) {
+                        controller.login(
+                            emailController.text, passwordController.text);
+                      }
                     },
                   ),
                   RaisedButton(
@@ -121,7 +140,8 @@ class LoginPage extends GetWidget<AuthController> {
                       ),
                     ),
                     onPressed: () {
-                      Get.to(SingUp(), transition: Transition.rightToLeftWithFade);
+                      Get.to(SingUp(),
+                          transition: Transition.rightToLeftWithFade);
                     },
                   )
                 ],

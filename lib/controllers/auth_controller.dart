@@ -35,6 +35,7 @@ class AuthController extends GetxController {
       }
 
     } catch (e) {
+      print(e); 
       Get.snackbar(
         "Error creating Account",
         e.message,

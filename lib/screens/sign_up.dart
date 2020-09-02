@@ -9,6 +9,7 @@ class SingUp extends GetWidget<AuthController> {
   TextEditingController userName = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _signUpFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -47,45 +48,72 @@ class SingUp extends GetWidget<AuthController> {
                     padding: EdgeInsets.only(
                         top: 20, bottom: 20, left: 20, right: 20),
                     margin: EdgeInsets.only(bottom: 30, top: 30),
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          keyboardType: TextInputType.name,
-                          textInputAction: TextInputAction.next,
-                          controller: userName,
-                          decoration: InputDecoration(
-                            hintText: "Name",
-                            prefixIcon: Icon(Icons.account_circle,
-                                color: Color(0xff2AA1F6)),
+                    child: Form(
+                      key: _signUpFormKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Name cannot be empty";
+                              } else {
+                                return null;
+                              }
+                            },
+                            autofocus: true,
+                            keyboardType: TextInputType.name,
+                            textInputAction: TextInputAction.next,
+                            controller: userName,
+                            decoration: InputDecoration(
+                              hintText: "Name",
+                              prefixIcon: Icon(Icons.account_circle,
+                                  color: Color(0xff2AA1F6)),
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            prefixIcon:
-                                Icon(Icons.email, color: Color(0xff2AA1F6)),
+                          SizedBox(
+                            height: 10,
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          textInputAction: TextInputAction.done,
-                          controller: passwordController,
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            prefixIcon:
-                                Icon(Icons.lock, color: Color(0xff2AA1F6)),
+                          TextFormField(
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return "Please enter a correct email address";
+                              } else {
+                                return null;
+                              }
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
+                            controller: emailController,
+                            decoration: InputDecoration(
+                              hintText: "Email",
+                              prefixIcon:
+                                  Icon(Icons.email, color: Color(0xff2AA1F6)),
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            validator: (value) {
+                              if (value.isEmpty &&
+                                  value.contains(new RegExp(
+                                      r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"))) {
+                                return "password must be 8 characters";
+                              } else {
+                                return null;
+                              }
+                            },
+                            textInputAction: TextInputAction.done,
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              hintText: "Password",
+                              prefixIcon:
+                                  Icon(Icons.lock, color: Color(0xff2AA1F6)),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   RaisedButton(
@@ -98,8 +126,10 @@ class SingUp extends GetWidget<AuthController> {
                       ),
                     ),
                     onPressed: () {
-                      controller.createUser(userName.text, emailController.text,
-                          passwordController.text);
+                      if (_signUpFormKey.currentState.validate()) {
+                        controller.createUser(userName.text,
+                            emailController.text, passwordController.text);
+                      }
                     },
                   ),
                 ],

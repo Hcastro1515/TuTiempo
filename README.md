@@ -11,8 +11,8 @@ TuTiempo es una aplicacion hecha para barberos y salones para que puedan guardar
 - [ ] create helper folder
 - [ ] develope a validator helper class
 - [ ] use validator helper class to validate TextFormFields
-- [ ] Nest TextFormFields inside a form
-- [ ] manage form validation on submit, thist should be done either on createUserMethod, or logging in method
+- [x] Nest TextFormFields inside a form
+- [x] manage form validation on submit, thist should be done either on createUserMethod, or logging in method
 - [ ] Fix, TextFormFields: KeyboardInputActions
 
 ### Thursday: Animations
