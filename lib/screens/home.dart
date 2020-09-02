@@ -9,7 +9,7 @@ import '../services/database.dart';
 
 class HomePage extends GetWidget<AuthController> {
   final TextEditingController taskController = TextEditingController();
-  TaskModel task = TaskModel(); 
+  TaskModel task = TaskModel();
   String time;
 
   @override
@@ -59,7 +59,8 @@ class HomePage extends GetWidget<AuthController> {
                         RaisedButton(
                           elevation: 0,
                           onPressed: () {
-                            Database().clearTasks(controller.user.uid, task.taskId); 
+                            Database()
+                                .clearTasks(controller.user.uid, task.taskId);
                           },
                           child: Text(
                             "clear".toUpperCase(),
@@ -108,9 +109,18 @@ class HomePage extends GetWidget<AuthController> {
                       child: ListView.builder(
                         itemCount: tcontroller.tasks.length,
                         itemBuilder: (_, index) {
-                          return TaskCard(
-                            task: tcontroller.tasks[index],
-                            uid: controller.user.uid,
+                          return Dismissible(
+                            direction: DismissDirection.endToStart,
+                            key: UniqueKey(),
+                            onDismissed: (direction) {
+                              Database()
+                                  .deleteTask(controller.user.uid, task.taskId);
+                                  
+                            },
+                            child: TaskCard(
+                              task: tcontroller.tasks[index],
+                              uid: controller.user.uid,
+                            ),
                           );
                         },
                       ),
