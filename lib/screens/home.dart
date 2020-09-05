@@ -115,7 +115,6 @@ class HomePage extends GetWidget<AuthController> {
                             onDismissed: (direction) {
                               Database()
                                   .deleteTask(controller.user.uid, task.taskId);
-                                  
                             },
                             child: TaskCard(
                               task: tcontroller.tasks[index],

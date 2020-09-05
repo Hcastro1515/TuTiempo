@@ -6,9 +6,9 @@ import 'package:get_x_todo/controllers/auth_controller.dart';
 import '../config.dart';
 
 class SingUp extends GetWidget<AuthController> {
-  TextEditingController userName = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController userName = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final _signUpFormKey = GlobalKey<FormState>();
 
   @override
@@ -60,7 +60,6 @@ class SingUp extends GetWidget<AuthController> {
                                 return null;
                               }
                             },
-                            autofocus: true,
                             keyboardType: TextInputType.name,
                             textInputAction: TextInputAction.next,
                             controller: userName,
